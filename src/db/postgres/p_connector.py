@@ -4,7 +4,7 @@ import psycopg2
 from dotenv import load_dotenv
 from sshtunnel import SSHTunnelForwarder
 
-from logging_config import logger as logging
+from src.logging_config import logger as logging
 
 load_dotenv()
 

@@ -1,1 +1,6 @@
 mailwizz-python-sdk==1.0.1
+psycopg2
+sshtunnel
+python-dotenv
+pymysql
+mysql-connector-python

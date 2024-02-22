@@ -1,12 +1,13 @@
 from datetime import datetime, timedelta
+from pprint import pprint
+
 import requests
-import pprint
 from mailwizz.base import Base
 from mailwizz.config import Config
 from mailwizz.endpoint.campaigns import Campaigns
-from src.logging_config import logger
-from db.mysql import m_queries as mysql
 
+from db.mysql import m_queries as mysql
+from logging_config import logger
 
 ENDPOINT = Campaigns()
 
@@ -22,6 +23,8 @@ def setup():
     })
     Base.set_config(config)
     return True
+
+setup()
 
 
 def get_weekly_campaigns():
@@ -57,23 +60,57 @@ def get_campaign_details(campaign_uuid):
         logger.error(
             f"{get_campaign_details.__name__} -- !!! ERROR OCCURRED - {ex}")
 
-    logger.info(
-        f"{get_campaign_details.__name__} -- STATUS CODE - {status_code}; RESPONSE DATA - {data}")
+    # logger.info(
+        # f"{get_campaign_details.__name__} -- STATUS CODE - {status_code}; RESPONSE DATA - {data}")
     return data
 
 
 def main():
-    setup()
     
     last_campaign_id = mysql.get_last_campaign_uuid()
 
     if last_campaign_id:
-        last_campaign_details = get_campaign_details(last_campaign_id)
+
+        matched_campaigns = [item for item in get_weekly_campaigns() if item["campaign_uid"] == last_campaign_id]
+
+        if matched_campaigns:
+            campaign = matched_campaigns[-1]
         
-        if last_campaign_details:
-            logger.info("SAVING CAMPAIGN DATA TO POSTGRES")
-            ...
+        campaign_uid = last_campaign_id
+        name = campaign["name"]
+        status = campaign["status"]
+        _type = campaign["type"]
+
+        campaign_detailed_data = get_campaign_details(last_campaign_id)
+
+        bounces_count = campaign_detailed_data["bounces_count"]
+        campaign_status = campaign_detailed_data["campaign_status"]
+        clicks_count = campaign_detailed_data["clicks_count"]
+        complaints_rate = campaign_detailed_data["complaints_rate"]
+        delivery_error_count = campaign_detailed_data["delivery_error_count"]
+        delivery_error_rate = campaign_detailed_data["delivery_error_rate"]
+        delivery_success_count = campaign_detailed_data["delivery_success_count"]
+        delivery_success_rate = campaign_detailed_data["delivery_success_rate"]
+        hard_bounces_count = campaign_detailed_data["hard_bounces_count"]
+        hard_bounces_rate = campaign_detailed_data["hard_bounces_rate"]
+        internal_bounces_count = campaign_detailed_data["internal_bounces_count"]
+        internal_bounces_rate = campaign_detailed_data["internal_bounces_count"]
+        opens_count = campaign_detailed_data["opens_count"]
+        opens_rate = campaign_detailed_data["opens_rate"]
+        processed_count = campaign_detailed_data["processed_count"]
+        soft_bounces_count = campaign_detailed_data["soft_bounces_count"]
+        soft_bounces_rate = campaign_detailed_data["soft_bounces_rate"]
+        subscribers_count = campaign_detailed_data["subscribers_count"]
+        unique_clicks_count = campaign_detailed_data["unique_clicks_count"]
+        unique_clicks_rate = campaign_detailed_data["unique_clicks_rate"]
+        unique_opens_count = campaign_detailed_data["unique_opens_count"]
+        unique_opens_rate = campaign_detailed_data["unique_opens_rate"]
+        unsubscribes_count = campaign_detailed_data["unsubscribes_count"]
+        unsubscribes_rate = campaign_detailed_data["unsubscribes_rate"]
+        clicks_rate = campaign_detailed_data["clicks_rate"]
+        complaints_count = campaign_detailed_data["complaints_count"]
 
 
 if __name__ == "__main__":
+    
     main()

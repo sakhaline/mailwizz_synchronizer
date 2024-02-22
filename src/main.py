@@ -123,9 +123,11 @@ def main():
 
                 # Inserting data into PostgreSQL
                 postgres.insert_mailwizz_campaign_data(insert_data)
+
+                # notify team by mail
+                requests.post("https://api.retool.com/v1/workflows/52e1a77c-e124-458c-b286-d49d699bb3be/startTrigger?workflowApiKey=retool_wk_33da9d2d852f4b5d85414b53240eafd5")
                 logger.info("MAILWIZZ SYNCHRONIZATION FINISHED")
 
 
 if __name__ == "__main__":
-    
     main()

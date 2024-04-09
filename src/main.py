@@ -1,7 +1,7 @@
-from datetime import datetime, timedelta
-from pprint import pprint
+import os
 
 import requests
+from dotenv import load_dotenv
 from mailwizz.base import Base
 from mailwizz.config import Config
 from mailwizz.endpoint.campaigns import Campaigns
@@ -10,6 +10,8 @@ from db.mysql import m_queries as mysql
 from db.postgres import p_queries as postgres
 from logging_config import logger
 
+load_dotenv()
+
 ENDPOINT = Campaigns()
 
 
@@ -17,9 +19,9 @@ def setup():
     logger.info("SETTING UP MAILWIZZ")
 
     config = Config({
-        'api_url': 'https://mailwizz.findbusinesses4sale.com/api',
-        'public_key': '635b076cd37ea8c1957337f8b8e386b953270b51',
-        'private_key': '635b076cd37ea8c1957337f8b8e386b953270b51',
+        'api_url': os.getenv("MAILWIZZ_API_URL"),
+        'public_key': os.getenv("MAILWIZZ_PUBLIC_KEY"),
+        'private_key': os.getenv("MAILWIZZ_PRIVATE_KEY"),
         'charset': 'utf-8'
     })
     Base.set_config(config)
@@ -46,9 +48,9 @@ def get_campaign_details(campaign_uuid):
     logger.info(f"GETTING WEEKLY CAMPAIGN DATA - {campaign_uuid}")
 
     response = requests.get(
-        url=f"https://mailwizz.findbusinesses4sale.com/api/campaigns/{campaign_uuid}/stats",
+        url=f"{os.getenv('MAILWIZZ_BASE_URL')}api/campaigns/{campaign_uuid}/stats",
         headers={
-            'X-Api-Key': '635b076cd37ea8c1957337f8b8e386b953270b51'
+            'X-Api-Key': os.getenv("MAILWIZZ_X_API_KEY")
         }
     )
 

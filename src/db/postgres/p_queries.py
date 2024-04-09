@@ -1,6 +1,6 @@
-from .p_connector import postgres_connector
-
 from logging_config import logger
+
+from .p_connector import postgres_connector
 
 
 @postgres_connector

@@ -4,3 +4,4 @@ sshtunnel
 python-dotenv
 pymysql
 mysql-connector-python
+isort

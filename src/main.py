@@ -66,7 +66,12 @@ def get_campaign_details(campaign_uuid):
     return data
 
 
-def main():
+def main(mode: int = 0):
+    """
+    0 - Postgres
+    1 - Retool
+    """
+
     last_campaign_id = mysql.get_last_campaign_uuid()
 
     if last_campaign_id:
@@ -121,11 +126,18 @@ def main():
                     unique_opens_rate, unsubscribes_count, unsubscribes_rate, clicks_rate, complaints_count
                 )
 
-                # Inserting data into PostgreSQL
-                postgres.insert_mailwizz_campaign_data(insert_data)
+                if mode == 0:
 
-                # notify team by mail
-                requests.post("https://api.retool.com/v1/workflows/52e1a77c-e124-458c-b286-d49d699bb3be/startTrigger?workflowApiKey=retool_wk_33da9d2d852f4b5d85414b53240eafd5")
+                    # Inserting data into PostgreSQL
+                    postgres.insert_mailwizz_campaign_data(insert_data)
+
+                    # notify team by mail
+                    requests.post("https://api.retool.com/v1/workflows/52e1a77c-e124-458c-b286-d49d699bb3be/startTrigger?workflowApiKey=retool_wk_33da9d2d852f4b5d85414b53240eafd5")
+                
+                elif mode == 1:
+                    #TODO: Retool insertment
+                    ...
+                
                 logger.info("MAILWIZZ SYNCHRONIZATION FINISHED")
 
 

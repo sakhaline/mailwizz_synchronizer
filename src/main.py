@@ -126,20 +126,17 @@ def main(mode: int = 0):
                     unique_opens_rate, unsubscribes_count, unsubscribes_rate, clicks_rate, complaints_count
                 )
 
-                if mode == 0:
+                if mode == 1:
+                    logger.info("INSERMENT MODE - RETOOL")
+                   #TODO: Retool insertment 
 
+                else:
+                    logger.info("INSERMENT MODE - POSTGRES")
                     # Inserting data into PostgreSQL
                     postgres.insert_mailwizz_campaign_data(insert_data)
-
-                    # notify team by mail
-                    requests.post("https://api.retool.com/v1/workflows/52e1a77c-e124-458c-b286-d49d699bb3be/startTrigger?workflowApiKey=retool_wk_33da9d2d852f4b5d85414b53240eafd5")
-                
-                elif mode == 1:
-                    #TODO: Retool insertment
-                    ...
                 
                 logger.info("MAILWIZZ SYNCHRONIZATION FINISHED")
 
 
 if __name__ == "__main__":
-    main()
+    main(mode=1)

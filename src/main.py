@@ -86,7 +86,11 @@ def main(postgres_access: bool = False) -> dict:
     # 2: fetch all necessary data for those campaigns
     # 3: prepare insert payload in format -> list[dict]
     # 4: send data to retool | insert to postgres
-    # 5: notify ACTSE team by email about sync result
+    # 5: notify ACTSE team by email about sync result (see description in Telegram)
+
+    # NOTE:
+    # automation should run once a Week (Tuesday|Wednesday is preferred)
+    # 
 
     result = {
         "success": False

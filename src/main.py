@@ -37,6 +37,9 @@ def get_weekly_campaigns():
     result = response.json()
 
     campaigns_list = result["data"]["records"]
+
+    print(campaigns_list)
+
     needed_campaigns_list = [
         campaign for campaign in campaigns_list if "Daily" not in campaign["name"]]
 

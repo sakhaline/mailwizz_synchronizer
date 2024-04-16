@@ -15,6 +15,10 @@ ENDPOINT = Campaigns()
 
 
 def setup():
+    """
+    opens access to MailWizz API
+    """
+
     logger.info("SETTING UP MAILWIZZ")
 
     config = Config({
@@ -30,6 +34,10 @@ setup()
 
 
 def get_weekly_campaigns():
+    """
+    gets a list of MailWizz campaigns
+    """
+
     logger.info("GETTING WEEKLY CAMPAIGNS")
 
     response = ENDPOINT.get_campaigns(page=1, per_page=100)
@@ -47,6 +55,10 @@ def get_weekly_campaigns():
 
 
 def get_campaign_details(campaign_uuid):
+    """
+    gets detailed data about MailWizz campaign by it's uniques UUID
+    """
+
     logger.info(f"GETTING WEEKLY CAMPAIGN DATA - {campaign_uuid}")
 
     response = requests.get(
@@ -67,12 +79,25 @@ def get_campaign_details(campaign_uuid):
     return data
 
 
-def main(insert_mode: int = 1):
-    """
-    0 - Postgres
-    1 - Retool
-    """
-    ...
+def main(postgres_access: bool = False) -> dict:
+
+    # TODO: 
+    # 1: get a list of campaigns (not Daily)
+    # 2: fetch all necessary data for those campaigns
+    # 3: prepare insert payload in format -> list[dict]
+    # 4: send data to retool | insert to postgres
+    # 5: notify ACTSE team by email about sync result
+
+    result = {
+        "success": False
+    }
+
+    if postgres_access:
+        logger.info(f"{main.__name__} -- MODE - POSTGRES DIRECT ACCESS")
+    else:
+        logger.info(f"{main.__name__} -- MODE - RETOOL API")
+
+    return result
 
 
 if __name__ == "__main__":

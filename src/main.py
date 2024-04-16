@@ -15,6 +15,7 @@ from datetime import datetime
 load_dotenv()
 
 ENDPOINT = Campaigns()
+RETOOL_API_KEY = os.getenv("workflowApiKey", "")
 
 
 def setup():
@@ -111,7 +112,7 @@ def process_campaign_list() -> None:
                 f"#{len(data)} CAMPAIGNS DUMPED TO JSON SUCCESSFULLY ^_^")
 
 
-def prepare_retool_json():
+def prepare_retool_json() -> None:
     retool_data = []
     campaign = {}
 
@@ -153,30 +154,38 @@ def prepare_retool_json():
         retool_data.append(campaign)
         with open("retool_payload.json", "w") as file:
             json.dump(retool_data, file, indent=4)
+        campaign = {}
+
+
+def retool_send_data() -> None:
+    URL = ("https://api.retool.com/v1/workflows/58bf7bb8-ab22-4f73-b737"
+        f"-98ef499abf02/startTrigger?workflowApiKey={RETOOL_API_KEY}")
+
+    with open("retool_payload.json", "r") as file:
+        payload = json.load(file)
+
+    response = requests.post(url=URL, json=payload)
+    if response.status_code == 200:
+        logger.info(f"{main.__name__} -- DATA SEND SUCCESSFULLY!!!")
+    else:
+        logger.error(f"{main.__name__} -- DATA SENDING FAILED")
 
 
 def main(postgres_access: bool = False) -> dict:
-
-
+    # process_campaign_list()
+    if postgres_access:
+        logger.info(f"{main.__name__} -- MODE - POSTGRES DIRECT ACCESS")
+    else:
+        logger.info(f"{main.__name__} -- MODE - RETOOL API")
+        # prepare_retool_json()
+        retool_send_data()
     # TODO: 
     # 5: notify ACTSE team by email about sync result (see description in Telegram)
     # NOTE:
     # automation should run once a Week (Tuesday|Wednesday is preferred)
 
 
-    result = {
-        "success": False
-    }
-
-    if postgres_access:
-        logger.info(f"{main.__name__} -- MODE - POSTGRES DIRECT ACCESS")
-    else:
-        logger.info(f"{main.__name__} -- MODE - RETOOL API")
-
-    return result
-
-
 if __name__ == "__main__":
     # get_weekly_campaigns()
     # process_campaign_list()
-    prepare_retool_json()
+    main()

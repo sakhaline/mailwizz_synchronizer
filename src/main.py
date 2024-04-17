@@ -73,9 +73,7 @@ def get_campaign_details(campaign_uuid: str) -> dict:
             'X-Api-Key': os.getenv("MAILWIZZ_X_API_KEY")
         }
     )
-
     data = {}
-
     try:
         data = response.json()["data"]
     except Exception as ex:

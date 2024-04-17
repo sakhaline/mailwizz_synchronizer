@@ -27,13 +27,13 @@ jobs:
           pip install -r requirements.txt
 
       - name: execute py script # run main.py
-      env:
-          MAILWIZZ_API_URL: ${{ secrets.MAILWIZZ_API_URL }}
-          MAILWIZZ_PUBLIC_KEY: ${{ secrets.MAILWIZZ_PUBLIC_KEY }}
-          MAILWIZZ_PRIVATE_KEY: ${{ secrets.MAILWIZZ_PRIVATE_KEY }}
-          MAILWIZZ_X_API_KEY: ${{ secrets.MAILWIZZ_X_API_KEY }}
-          MAILWIZZ_BASE_URL: ${{ secrets.MAILWIZZ_BASE_URL }}
-          RETOOL_API_INSERT_DATA: ${{ secrets.RETOOL_API_INSERT_DATA }}
-          RETOOL_API_EMAIL: ${{ secrets.RETOOL_API_EMAIL }}
-          workflowApiKey: ${{ secrets.workflowApiKey }}
+        env:
+            MAILWIZZ_API_URL: ${{ secrets.MAILWIZZ_API_URL }}
+            MAILWIZZ_PUBLIC_KEY: ${{ secrets.MAILWIZZ_PUBLIC_KEY }}
+            MAILWIZZ_PRIVATE_KEY: ${{ secrets.MAILWIZZ_PRIVATE_KEY }}
+            MAILWIZZ_X_API_KEY: ${{ secrets.MAILWIZZ_X_API_KEY }}
+            MAILWIZZ_BASE_URL: ${{ secrets.MAILWIZZ_BASE_URL }}
+            RETOOL_API_INSERT_DATA: ${{ secrets.RETOOL_API_INSERT_DATA }}
+            RETOOL_API_EMAIL: ${{ secrets.RETOOL_API_EMAIL }}
+            workflowApiKey: ${{ secrets.workflowApiKey }}
         run: python src/main.py

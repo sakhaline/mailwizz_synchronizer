@@ -1,14 +1,10 @@
 name: Weekly mailwizz synchronization
 
 on:
-  push
+  schedule:
+    - cron: '0 0 * * 1'
 
-# jobs:
-#   Daily run
-#     runs-on: ubuntu-latest
-#       steps:
-#         - name: Checkout Code
-#           uses: actions/checkout@v4
+
 jobs:
   build:
     runs-on: ubuntu-latest

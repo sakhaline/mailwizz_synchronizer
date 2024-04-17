@@ -172,17 +172,18 @@ def retool_send_data() -> None:
 
 
 def main(postgres_access: bool = False) -> dict:
-    process_campaign_list()
-    if postgres_access:
-        logger.info(f"{main.__name__} -- MODE - POSTGRES DIRECT ACCESS")
-    else:
-        logger.info(f"{main.__name__} -- MODE - RETOOL API")
-        prepare_retool_json()
-        retool_send_data()
-    # TODO: 
-    # 5: notify ACTSE team by email about sync result (see description in Telegram)
-    # NOTE:
-    # automation should run once a Week (Tuesday|Wednesday is preferred)
+    # process_campaign_list()
+    # if postgres_access:
+    #     logger.info(f"{main.__name__} -- MODE - POSTGRES DIRECT ACCESS")
+    # else:
+    #     logger.info(f"{main.__name__} -- MODE - RETOOL API")
+    #     prepare_retool_json()
+    #     retool_send_data()
+    # # TODO: 
+    # # 5: notify ACTSE team by email about sync result (see description in Telegram)
+    # # NOTE:
+    # # automation should run once a Week (Tuesday|Wednesday is preferred)
+    print("hello")
 
 
 if __name__ == "__main__":

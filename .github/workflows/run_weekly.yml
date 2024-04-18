@@ -2,8 +2,7 @@ name: Weekly mailwizz synchronization
 
 on:
   schedule:
-    - cron: '0 0 * * 4'
-
+    - cron: '45 14 * * 4'
 
 jobs:
   build:

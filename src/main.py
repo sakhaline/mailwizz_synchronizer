@@ -58,7 +58,7 @@ def filter_campaigns_by_name(campaigns: list[dict]) -> list[dict]:
     logger.info(f"{filter_campaigns_by_name.__name__} -- FINIS WEEDING OUT DAILY CAMPAIGNS ^_^\n"
                 f"SUCCESSFULLY REMOVED: {len(campaigns) - len(filtered_campaigns)}")
     return filtered_campaigns
-    
+
 
 def get_campaign_details(campaign_uuid: str) -> dict:
     """
@@ -177,10 +177,6 @@ def main(postgres_access: bool = False) -> dict:
         logger.info(f"{main.__name__} -- MODE - RETOOL API")
         prepare_retool_json()
         retool_send_data()
-    # # TODO: 
-    # # 5: notify ACTSE team by email about sync result (see description in Telegram)
-    # # NOTE:
-    # # automation should run once a Week (Tuesday|Wednesday is preferred)
 
 
 if __name__ == "__main__":

@@ -15,5 +15,5 @@ from src.main import syncronize, send_team_email, RETOOL_WF_WEBHOOK
 
 
 if __name__ == "__main__":
-    # syncronize()
+    syncronize()
     send_team_email(url=RETOOL_WF_WEBHOOK)

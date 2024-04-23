@@ -10,7 +10,6 @@ from mailwizz.endpoint.campaigns import Campaigns
 
 from logger.logging_config import logger
 
-
 load_dotenv()
 
 BASEDIR = os.getcwd()

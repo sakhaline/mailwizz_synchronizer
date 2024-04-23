@@ -1,4 +1,4 @@
-from logging_config import logger
+from logger.logging_config import logger
 
 from .m_connector import mysql_connector
 

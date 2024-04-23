@@ -6,7 +6,7 @@ import pymysql
 from dotenv import load_dotenv
 from sshtunnel import SSHTunnelForwarder
 
-from logging_config import logger as logging
+from logger.logging_config import logger as logging
 
 # logging.basicConfig(level=logging.INFO,
 #                     format='%(asctime)s - %(levelname)s - %(message)s')
